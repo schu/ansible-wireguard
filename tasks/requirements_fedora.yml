@@ -1,0 +1,16 @@
+---
+- name: determine current kernel version
+  shell: uname -r
+  register: kernel_release_output
+- name: install requirements
+  dnf:
+    state: latest
+    name: "{{ item }}"
+  with_items: "{{ wireguard_requirements_fedora }}"
+- name: install kernel headers and devel packages
+  dnf:
+    state: latest
+    name: "{{ item }}"
+  with_items:
+    - "kernel-headers-{{ kernel_release_output.stdout }}"
+    - "kernel-devel-{{ kernel_release_output.stdout }}"

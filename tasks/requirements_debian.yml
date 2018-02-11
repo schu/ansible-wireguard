@@ -1,0 +1,9 @@
+---
+- name: update apt cache
+  apt:
+    update_cache: yes
+- name: install requirements
+  apt:
+    state: latest
+    name: "{{ item }}"
+  with_items: "{{ wireguard_requirements_debian }}"

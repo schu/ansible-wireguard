@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - ansible-wireguard
+  user: vagrant
+  become: True

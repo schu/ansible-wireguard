@@ -1,0 +1,27 @@
+---
+- name: determine installed wireguard version
+  shell: dkms status | awk '/wireguard/ { sub(/[,:]/, "", $2); print $2 }'
+  register: wireguard_version_output
+- name: set wireguard_installed_version fact
+  set_fact: wireguard_installed_version="{{ wireguard_version_output.stdout }}"
+- name: remove old install
+  shell: |
+    set -e
+    dkms remove "wireguard/{{ wireguard_installed_version }}" --all
+    rm -rvf "/usr/src/wireguard-{{ wireguard_installed_version }}"
+  when: wireguard_installed_version != wireguard_version and wireguard_installed_version != ""
+- name: build and install from git
+  shell: |
+    set -e
+    cd /tmp
+    test -d "WireGuard" || git clone https://git.zx2c4.com/WireGuard
+    cd WireGuard
+    git checkout "{{ wireguard_version }}"
+    cd src/
+    make DKMSDIR="/usr/src/wireguard-{{ wireguard_version }}" dkms-install
+    dkms add "wireguard/{{ wireguard_version }}"
+    dkms build "wireguard/{{ wireguard_version }}"
+    dkms install "wireguard/{{ wireguard_version }}"
+    modprobe wireguard
+    make -C tools install
+  when: wireguard_installed_version != wireguard_version
