@@ -2,5 +2,5 @@
 - hosts: all
   roles:
     - ansible-wireguard
-  user: vagrant
-  become: True
+  vars:
+    debian_add_unstable_repo: true
