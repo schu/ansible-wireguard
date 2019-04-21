@@ -1,6 +1,8 @@
-# Wireguard Ansible role (experimental)
+# Wireguard Ansible role
 
-## Python environment
+Status: alpha, work in progress
+
+## Python environment for Ansible
 
 ```
 python3 -m venv venv
@@ -16,7 +18,7 @@ source venv/bin/activate
 ansible-playbook -i "localhost," -b -K -c local -vv playbook-local.yml
 ```
 
-## Test in Vagrant
+## Testing with Vagrant
 
 ```
 source venv/bin/activate
