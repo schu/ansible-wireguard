@@ -1,0 +1,23 @@
+---
+- name: enable wireguard copr
+  shell: |
+    dnf copr enable -y jdoss/wireguard
+  args:
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:jdoss:wireguard.repo
+    warn: false
+
+- name: install wireguard dependencies
+  shell: |
+    # Make sure we have headers and sources for the *currently running*
+    # kernel which might is not latest
+    dnf install -y kernel-headers-$(uname -r)
+    dnf install -y kernel-devel-$(uname -r)
+  args:
+    warn: false
+
+- name: install latest wireguard
+  dnf:
+    state: latest
+    name:
+      - wireguard-dkms
+      - wireguard-tools

@@ -5,16 +5,22 @@
     mode: 0755
 - stat:
     path: /etc/wireguard/private-key
-  register: wg_privkey
+  register: wg_privkey_file
 - stat:
     path: /etc/wireguard/public-key
-  register: wg_pubkey
+  register: wg_pubkey_file
 - name: generate private key
   shell: |
     wg genkey >/etc/wireguard/private-key
     chmod 0600 /etc/wireguard/private-key
-  when: wg_privkey.stat.exists == False
+  when: wg_privkey_file.stat.exists == False
 - name: generate public key
   shell: |
     wg pubkey </etc/wireguard/private-key >/etc/wireguard/public-key
-  when: wg_pubkey.stat.exists == False
+  when: wg_pubkey_file.stat.exists == False
+- name: read public key into var
+  shell: cat /etc/wireguard/public-key
+  register: wg_pubkey
+- name: set wireguard facts
+  set_fact:
+    wg_public_key: wg_pubkey.stdout

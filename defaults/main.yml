@@ -1,27 +1,4 @@
 ---
-wireguard_version: 0.0.20180202
-
-wireguard_requirements_debian:
-  - git
-  - dkms
-  - libmnl-dev
-  - build-essential
-  - pkg-config
-  - linux-headers-amd64
-
-wireguard_requirements_ubuntu:
-  - git
-  - dkms
-  - libmnl-dev
-  - build-essential
-  - pkg-config
-  - linux-headers-generic
-
-wireguard_requirements_fedora:
-  - git
-  - dkms
-  - libmnl-devel
-  - kernel-devel
-  - kernel-headers
-  - pkg-config
-  - "@development-tools"
+# Not everybody wants the role to add the unstable repo,
+# only do it on request
+debian_add_unstable_repo: false

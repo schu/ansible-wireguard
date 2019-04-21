@@ -1,0 +1,18 @@
+---
+- name: add and pin debian unstable repo
+  shell: |
+    echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources.list.d/unstable.list
+    printf 'Package: *\nPin: release a=unstable\nPin-Priority: 90\n' > /etc/apt/preferences.d/limit-unstable
+  when: debian_add_unstable_repo
+
+- name: install wireguard dependencies
+  apt:
+    name:
+      - linux-headers-amd64
+    update_cache: yes
+
+- name: install latest wireguard
+  apt:
+    name: wireguard
+    state: latest
+    default_release: unstable
