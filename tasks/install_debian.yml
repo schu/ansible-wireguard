@@ -9,6 +9,7 @@
   apt:
     name:
       - linux-headers-amd64
+      - resolvconf
     update_cache: yes
 
 - name: install latest wireguard

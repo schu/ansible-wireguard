@@ -10,8 +10,7 @@
   shell: |
     # Make sure we have headers and sources for the *currently running*
     # kernel which might is not latest
-    dnf install -y kernel-headers-$(uname -r)
-    dnf install -y kernel-devel-$(uname -r)
+    dnf install -y kernel-headers-$(uname -r) kernel-devel-$(uname -r) resolvconf
   args:
     warn: false
 

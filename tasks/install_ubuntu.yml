@@ -3,6 +3,12 @@
   apt_repository:
     repo: ppa:wireguard/wireguard
 
+- name: install wireguard dependencies
+  apt:
+    name:
+      - resolvconf
+    update_cache: yes
+
 - name: install latest wireguard
   apt:
     name: wireguard
