@@ -6,6 +6,7 @@
 - name: install wireguard dependencies
   apt:
     name:
+      - linux-headers-virtual
       - resolvconf
     update_cache: yes
 
